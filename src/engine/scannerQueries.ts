@@ -50,6 +50,15 @@ export function knownPaidQuery(after: string): string {
   ].join(" ");
 }
 
+export function cardChargeQuery(after: string): string {
+  return [
+    "(from:(stripe.com OR paypal.com OR paddle.com OR bunq.com OR revolut.com OR wise.com))",
+    '(receipt OR invoice OR subscription OR "payment to" OR "payment was unsuccessful")',
+    `after:${after}`,
+    "in:anywhere",
+  ].join(" ");
+}
+
 /**
  * Yearly domain auto-renew — any registrar. Not a brand list:
  * GoDaddy, Namecheap, Vercel, Cloudflare, a Dutch host, same query.

@@ -17,7 +17,7 @@ const PROMO_NOISE =
   /gemini voor home|gemini for home|google home <googlehome@|from google home\b|weekly energy saving report|free domain|domain for sale|buy this domain|parked domain|aftermarket|expired domain auction/i;
 
 const REAL_CHARGE =
-  /you(?:['’]ve| have) been charged|item price|платеж.{0,24}списан|подписка.{0,80}продлена|subscription (?:continues|renewed)|квитанция об оплате|order receipt|factuur|invoice|payment to\b/i;
+  /you(?:['’]ve| have) been charged|item price|платеж.{0,24}списан|подписка.{0,80}продлена|subscription (?:continues|renewed)|квитанция об оплате|order receipt|receipt from|factuur|invoice|payment to\b/i;
 
 const SUB_SIGNAL =
   /subscription (?:continues|renewed|is now active|receipt|from|payment)|trial (?:ending|has started|ends)|membership (?:renewed|active)|recurring|(?:you(?:['’]ve| have) been charged)|billed (?:for|successfully)|auto-?renew|couldn['’]?t process payment|could not process payment|issue processing your subscription/i;
@@ -164,7 +164,14 @@ export function shouldKeepMail(mail: FetchedMail): boolean {
   const name = merchantName(mail);
   const brand = matchBrand(name, parsed.domain, text);
   if (brand) {
-    if (mail.pass === 1) return isRealCharge(text) || hasSubSignal(text) || isFailedPayment(text);
+    if (mail.pass === 1) {
+      return (
+        isRealCharge(text) ||
+        hasSubSignal(text) ||
+        isFailedPayment(text) ||
+        isDomainCharge(text)
+      );
+    }
     return hasSubSignal(text) || hasPaidCue(text);
   }
 

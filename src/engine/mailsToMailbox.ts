@@ -176,7 +176,7 @@ export function classifyMailbox(mails: FetchedMail[]): { hits: MailboxHit[]; dro
       links: row.links,
     };
   })
-    .filter((hit) => hit.price > 0);
+    .filter((hit) => hit.price > 0 || hit.slug === "vercel");
 
   return { hits, dropped: mails.length - keptMails.length };
 }

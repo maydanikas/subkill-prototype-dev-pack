@@ -1,4 +1,4 @@
-const CACHE = "subkill-v1";
+const CACHE = "subkill-v2";
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
