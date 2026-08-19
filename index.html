@@ -38,6 +38,11 @@ html, body { margin: 0; background: #0A0A0A; color: #fff; }
     <p><a href="/privacy.html" style="color:#00FF88">Privacy Policy</a> · <a href="/terms.html" style="color:#00FF88">Terms of Service</a></p>
   </main>
 </div>
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/sw.js");
+}
+</script>
 <script type="module" src="/src/main.tsx"></script>
 </body>
 </html>
