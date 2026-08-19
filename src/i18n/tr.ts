@@ -13,6 +13,8 @@ export const tr: Messages = {
     openDemo: "Demoyu aç",
     demoFirst: "Önce demo",
     needClientId: "Canlı Gmail, Client ID yapıştırınca açılır",
+    privacy: "Gizlilik",
+    terms: "Şartlar",
   },
   errors: {
     googleDenied: "Google erişim vermedi",

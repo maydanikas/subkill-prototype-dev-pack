@@ -13,6 +13,8 @@ export const fr: Messages = {
     openDemo: "Ouvrir la démo",
     demoFirst: "D’abord la démo",
     needClientId: "Gmail live s’active quand tu colles un Client ID",
+    privacy: "Confidentialité",
+    terms: "Conditions",
   },
   errors: {
     googleDenied: "Google a refusé l’accès",

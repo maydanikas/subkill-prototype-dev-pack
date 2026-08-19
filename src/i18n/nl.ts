@@ -13,6 +13,8 @@ export const nl: Messages = {
     openDemo: "Demo openen",
     demoFirst: "Eerst de demo",
     needClientId: "Live Gmail gaat aan zodra je een Client ID plakt",
+    privacy: "Privacy",
+    terms: "Voorwaarden",
   },
   errors: {
     googleDenied: "Google gaf geen toegang",

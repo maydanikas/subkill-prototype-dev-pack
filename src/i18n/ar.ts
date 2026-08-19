@@ -13,6 +13,8 @@ export const ar: Messages = {
     openDemo: "فتح العرض",
     demoFirst: "العرض أولاً",
     needClientId: "Gmail الحقيقي يعمل بعد لصق Client ID",
+    privacy: "الخصوصية",
+    terms: "الشروط",
   },
   errors: {
     googleDenied: "رفض Google الوصول",

@@ -13,6 +13,8 @@ export const ko: Messages = {
     openDemo: "데모 열기",
     demoFirst: "먼저 데모",
     needClientId: "Client ID를 넣으면 실제 Gmail이 켜집니다",
+    privacy: "개인정보",
+    terms: "약관",
   },
   errors: {
     googleDenied: "Google이 접근을 거부했습니다",

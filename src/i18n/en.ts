@@ -11,6 +11,8 @@ export const en = {
     openDemo: "Open demo",
     demoFirst: "Try the demo first",
     needClientId: "Live Gmail turns on after you add a Client ID",
+    privacy: "Privacy",
+    terms: "Terms",
   },
   errors: {
     googleDenied: "Google didn't allow access",

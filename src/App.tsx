@@ -750,6 +750,15 @@ function Onboarding({
       ) : (
         <div className="mt-3 text-center text-white/30 text-[11px]">{t("onboarding.needClientId")}</div>
       )}
+      <div className="mt-3 flex items-center justify-center gap-3 text-white/30 text-[11px]">
+        <a href="/privacy.html" className="hover:text-white/60">
+          {t("onboarding.privacy")}
+        </a>
+        <span aria-hidden>·</span>
+        <a href="/terms.html" className="hover:text-white/60">
+          {t("onboarding.terms")}
+        </a>
+      </div>
     </div>
   );
 }

@@ -13,6 +13,8 @@ export const uk: Messages = {
     openDemo: "Відкрити демо",
     demoFirst: "Спочатку демо",
     needClientId: "Живий Gmail увімкнеться, коли вставиш Client ID",
+    privacy: "Конфіденційність",
+    terms: "Умови",
   },
   errors: {
     googleDenied: "Google не пустив",

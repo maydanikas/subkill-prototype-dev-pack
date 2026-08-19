@@ -13,6 +13,8 @@ export const zhTW: Messages = {
     openDemo: "開啟示範",
     demoFirst: "先看示範",
     needClientId: "填入 Client ID 後即可掃描真實 Gmail",
+    privacy: "隱私權政策",
+    terms: "條款",
   },
   errors: {
     googleDenied: "Google 拒絕了存取",

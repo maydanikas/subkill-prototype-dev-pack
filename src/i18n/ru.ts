@@ -13,6 +13,8 @@ export const ru: Messages = {
     openDemo: "Открыть демо",
     demoFirst: "Сначала демо",
     needClientId: "Живой Gmail включится, когда вставишь Client ID",
+    privacy: "Конфиденциальность",
+    terms: "Условия",
   },
   errors: {
     googleDenied: "Google не пустил",

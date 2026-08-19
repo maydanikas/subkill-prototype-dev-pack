@@ -13,6 +13,8 @@ export const zh: Messages = {
     openDemo: "打开演示",
     demoFirst: "先看演示",
     needClientId: "填入 Client ID 后即可扫描真实 Gmail",
+    privacy: "隐私政策",
+    terms: "条款",
   },
   errors: {
     googleDenied: "Google 拒绝了访问",

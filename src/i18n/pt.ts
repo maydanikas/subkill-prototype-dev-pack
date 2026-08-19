@@ -13,6 +13,8 @@ export const pt: Messages = {
     openDemo: "Abrir o demo",
     demoFirst: "Primeiro o demo",
     needClientId: "O Gmail ao vivo liga quando você cola um Client ID",
+    privacy: "Privacidade",
+    terms: "Termos",
   },
   errors: {
     googleDenied: "O Google não deu acesso",

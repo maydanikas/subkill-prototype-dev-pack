@@ -13,6 +13,8 @@ export const ja: Messages = {
     openDemo: "デモを開く",
     demoFirst: "まずデモ",
     needClientId: "Client IDを入れると本番Gmailが有効になります",
+    privacy: "プライバシー",
+    terms: "利用規約",
   },
   errors: {
     googleDenied: "Googleがアクセスを拒否しました",
