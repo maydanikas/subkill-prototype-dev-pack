@@ -16,6 +16,7 @@ const PROCESSORS = [
   "paddle.net",
   "paddle.com",
   "recurly.com",
+  "vercel.com",
 ];
 
 export function receiptQuery(after: string): string {
@@ -49,10 +50,18 @@ export function knownPaidQuery(after: string): string {
   ].join(" ");
 }
 
-export function cardChargeQuery(after: string): string {
+/**
+ * Yearly domain auto-renew — any registrar. Not a brand list:
+ * GoDaddy, Namecheap, Vercel, Cloudflare, a Dutch host, same query.
+ */
+export function domainQuery(after: string): string {
   return [
-    "(from:(stripe.com OR paypal.com OR paddle.com OR bunq.com OR revolut.com OR wise.com))",
-    '(receipt OR invoice OR subscription OR "payment to" OR "payment was unsuccessful")',
+    "(",
+    "subject:domain OR \"domain renewal\" OR \"domain registration\" OR \"domain invoice\" OR \"domain name\" OR \"your domain\" OR домен OR domein",
+    ")",
+    "(",
+    "invoice OR receipt OR renew OR renewal OR charged OR payment OR registration OR квитанция OR продлен OR factuur OR verlenging",
+    ")",
     `after:${after}`,
     "in:anywhere",
   ].join(" ");

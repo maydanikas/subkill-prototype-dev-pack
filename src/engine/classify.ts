@@ -14,7 +14,7 @@ const WALLET_TOPUP =
   /google play credit|play credit|itunes credit|apple (?:gift|account) credit|gift card|top[\s-]?up|пополнен(?:ие|ия)|tegoed|saldo (?:opgewaardeerd|aangevuld|added)/i;
 
 const PROMO_NOISE =
-  /gemini voor home|gemini for home|google home <googlehome@|from google home\b|weekly energy saving report/i;
+  /gemini voor home|gemini for home|google home <googlehome@|from google home\b|weekly energy saving report|free domain|domain for sale|buy this domain|parked domain|aftermarket|expired domain auction/i;
 
 const REAL_CHARGE =
   /you(?:['’]ve| have) been charged|item price|платеж.{0,24}списан|подписка.{0,80}продлена|subscription (?:continues|renewed)|квитанция об оплате|order receipt|factuur|invoice|payment to\b/i;
@@ -61,8 +61,15 @@ export function brandFromDomain(domain: string): string {
 export function isOneTimePurchase(text: string): boolean {
   if (WALLET_TOPUP.test(text)) return true;
   if (isGenericAppleInvoice(text)) return true;
+  if (isDomainCharge(text)) return false;
   if (SUB_SIGNAL.test(text) && /subscription/i.test(text) && !WALLET_TOPUP.test(text)) return false;
   return ONE_TIME.test(text);
+}
+
+/** Registrar-agnostic: domain bills auto-renew, they are not a one-off shop order. */
+export function isDomainCharge(text: string): boolean {
+  if (!/\bdomain\b|домен|\bdomein\b|vercel/i.test(text)) return false;
+  return /invoice|receipt|renew|registration|charged|billed|factuur|verlenging|квитанция|продлен/i.test(text);
 }
 
 export function isPromoNoise(text: string): boolean {
@@ -107,6 +114,7 @@ export function isFailedPayment(text: string): boolean {
 /** Period this charge covers. Failed mails are ignored by the caller. */
 export function parseBillingCycle(text: string): BillingCycle | null {
   if (YEARLY_CYCLE.test(text)) return "yearly";
+  if (isDomainCharge(text) && !MONTHLY_CYCLE.test(text)) return "yearly";
   if (WEEKLY_CYCLE.test(text) && !MONTHLY_CYCLE.test(text)) return "weekly";
   if (MONTHLY_CYCLE.test(text)) return "monthly";
   return null;
@@ -150,7 +158,7 @@ export function shouldKeepMail(mail: FetchedMail): boolean {
   const text = decodeEntities(`${mail.subject} ${mail.snippet}`);
   if (isPromoNoise(`${mail.from} ${text}`)) return false;
   if (isOneTimePurchase(text)) return false;
-  if (isAccountNoise(text) && !hasSubSignal(text) && !hasPaidCue(text)) return false;
+  if (isAccountNoise(text) && !hasSubSignal(text) && !hasPaidCue(text) && !isDomainCharge(text)) return false;
 
   const parsed = parseFrom(mail.from);
   const name = merchantName(mail);
@@ -161,12 +169,15 @@ export function shouldKeepMail(mail: FetchedMail): boolean {
   }
 
   if (mail.pass === 1 && isProcessorReceipt(parsed.domain, text)) return true;
+  if (mail.pass === 1 && isDomainCharge(text)) return true;
   return false;
 }
 
 function isProcessorReceipt(domain: string, text: string): boolean {
-  if (!/stripe\.com|paddle\.|recurly\.com|paypal\.com|google\.com|apple\.com/.test(domain)) return false;
-  return isRealCharge(text) || isFailedPayment(text);
+  if (!/stripe\.com|paddle\.|recurly\.com|paypal\.com|google\.com|apple\.com|vercel\.com/.test(domain)) {
+    return false;
+  }
+  return isRealCharge(text) || isFailedPayment(text) || isDomainCharge(text);
 }
 
 export function slugForMail(mail: FetchedMail, name: string): string {

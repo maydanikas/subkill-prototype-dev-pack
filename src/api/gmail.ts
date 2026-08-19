@@ -1,5 +1,5 @@
 import { extractHrefs, uniqueUrls } from "../engine/cancelLink";
-import { behaviorQuery, cardChargeQuery, knownPaidQuery, receiptQuery, welcomeQuery } from "../engine/scannerQueries";
+import { behaviorQuery, cardChargeQuery, domainQuery, knownPaidQuery, receiptQuery, welcomeQuery } from "../engine/scannerQueries";
 
 export const GMAIL_SCOPE = "https://www.googleapis.com/auth/gmail.readonly";
 export const GOOGLE_SCOPES = `${GMAIL_SCOPE} openid email profile`;
@@ -231,6 +231,7 @@ export async function scanGmail(
     ...(await fetchPass(token, receiptQuery(after), 1, 50)),
     ...(await fetchPass(token, knownPaidQuery(after), 1, 30)),
     ...(await fetchPass(token, cardChargeQuery(after), 1, 30)),
+    ...(await fetchPass(token, domainQuery(after), 1, 30)),
   ];
   const receipts = uniqueById(receiptHits);
   onPass(2);

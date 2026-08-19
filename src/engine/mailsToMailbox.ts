@@ -30,6 +30,7 @@ const CATEGORY: Record<string, { key: string; label: string }> = {
   claude: { key: "work", label: "Работа" },
   "github-copilot": { key: "work", label: "Работа" },
   cursor: { key: "work", label: "Работа" },
+  vercel: { key: "work", label: "Работа" },
   medium: { key: "productivity", label: "Продуктивность" },
   dropbox: { key: "storage", label: "Хранилище" },
   strava: { key: "fitness", label: "Фитнес" },

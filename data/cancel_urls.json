@@ -19,6 +19,7 @@
   { "slug": "claude", "display_name": "Claude Pro", "cancel_url": "https://claude.ai/settings/billing", "billing_source": "web", "method": "direct_link" },
   { "slug": "github-copilot", "display_name": "GitHub Copilot", "cancel_url": "https://github.com/settings/billing/subscriptions", "billing_source": "web", "method": "direct_link" },
   { "slug": "cursor", "display_name": "Cursor", "cancel_url": "https://cursor.com/settings", "billing_source": "stripe", "method": "direct_link" },
+  { "slug": "vercel", "display_name": "Vercel", "cancel_url": "https://vercel.com/account", "billing_source": "stripe", "method": "direct_link" },
   { "slug": "medium", "display_name": "Medium", "cancel_url": "https://medium.com/me/settings", "billing_source": "web", "method": "direct_link" },
   { "slug": "dropbox", "display_name": "Dropbox", "cancel_url": "https://www.dropbox.com/account/plan", "billing_source": "web", "method": "direct_link" },
   { "slug": "strava", "display_name": "Strava", "cancel_url": "https://www.strava.com/settings/subscription", "billing_source": "web", "method": "direct_link" },

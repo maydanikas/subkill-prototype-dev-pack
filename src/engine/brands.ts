@@ -25,6 +25,7 @@ const EXTRA_DOMAINS: Record<string, string[]> = {
   chatgpt: ["openai.com", "chatgpt.com"],
   claude: ["anthropic.com", "claude.ai"],
   cursor: ["cursor.com", "cursor.sh", "anysphere.com"],
+  vercel: ["vercel.com"],
   medium: ["medium.com"],
   dropbox: ["dropbox.com"],
   strava: ["strava.com"],
@@ -100,7 +101,15 @@ const LANDLORD_HOSTS = new Set([
   "househunting.nl",
 ]);
 
-const PASS3_SKIP = new Set(["medium.com", "dropbox.com", "tinder.com", "gotinder.com", "bumble.com", "max.com"]);
+const PASS3_SKIP = new Set([
+  "medium.com",
+  "dropbox.com",
+  "tinder.com",
+  "gotinder.com",
+  "bumble.com",
+  "max.com",
+  "vercel.com",
+]);
 
 /** Local housing portals — keep for naming a Stripe/Play charge, never crawl them. */
 const NOT_DISCOVERY_SLUGS = new Set([
