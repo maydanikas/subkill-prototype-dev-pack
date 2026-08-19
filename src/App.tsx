@@ -59,6 +59,17 @@ function avatarColor(key: string): string {
   return GOOGLE_LETTER_COLORS[hash % GOOGLE_LETTER_COLORS.length];
 }
 
+function EnvelopeMark({ className }: { className?: string }) {
+  return (
+    <div className={`rounded-full bg-[#00FF88] flex items-center justify-center shrink-0 ${className ?? ""}`}>
+      <svg viewBox="0 0 24 24" className="w-[52%] h-[52%]" fill="#111" aria-hidden>
+        <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z" />
+        <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
+      </svg>
+    </div>
+  );
+}
+
 function AccountAvatar({
   name,
   email,
@@ -382,9 +393,7 @@ export default function App() {
           <>
             <div className="px-5 pb-3 flex items-center justify-between">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-full bg-[#00FF88] flex items-center justify-center">
-                  <span className="text-black font-black text-[18px] tracking-tighter">S</span>
-                </div>
+                <EnvelopeMark className="w-9 h-9" />
                 <div>
                   <div className="text-white font-bold text-[18px] leading-none tracking-tight">SubKill</div>
                   <div className="text-white/40 text-[11px] font-mono -mt-[1px]">
@@ -711,9 +720,7 @@ function Onboarding({
   return (
     <div className="flex-1 px-6 pb-10 flex flex-col">
       <div className="flex-1 flex flex-col justify-center">
-        <div className="w-14 h-14 rounded-full bg-[#00FF88] flex items-center justify-center mb-6">
-          <span className="text-black font-black text-[28px]">S</span>
-        </div>
+        <EnvelopeMark className="w-14 h-14 mb-6" />
         <h1 className="text-white font-bold text-[32px] leading-[1.1] tracking-tight">
           {t("onboarding.headline")}
         </h1>
