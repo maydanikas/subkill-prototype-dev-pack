@@ -721,9 +721,8 @@ function Onboarding({
     <div className="flex-1 px-6 pb-10 flex flex-col">
       <div className="flex-1 flex flex-col justify-center">
         <EnvelopeMark className="w-14 h-14 mb-6" />
-        <h1 className="text-white font-bold text-[32px] leading-[1.1] tracking-tight">
-          {t("onboarding.headline")}
-        </h1>
+        <h1 className="text-white font-bold text-[32px] leading-[1.1] tracking-tight">{t("title")}</h1>
+        <p className="text-white text-[18px] mt-3 leading-snug font-medium">{t("onboarding.headline")}</p>
         <p className="text-white/50 text-[15px] mt-4 leading-relaxed">{t("onboarding.body")}</p>
         <div className="mt-8 space-y-3">
           {[t("onboarding.bullet1"), t("onboarding.bullet2"), t("onboarding.bullet3")].map((line) => (
