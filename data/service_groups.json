@@ -1,0 +1,8 @@
+{
+  "ai": ["chatgpt", "claude", "gemini", "perplexity", "github-copilot", "cursor", "notion"],
+  "notes": ["notion", "evernote", "obsidian-sync", "roam"],
+  "music": ["spotify", "apple-music", "youtube-music", "tidal"],
+  "dating": ["tinder", "bumble", "hinge"],
+  "storage": ["icloud", "google-one", "dropbox", "onedrive"],
+  "mindfulness": ["calm", "headspace"]
+}
