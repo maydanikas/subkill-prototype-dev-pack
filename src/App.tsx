@@ -721,9 +721,13 @@ function Onboarding({
     <div className="flex-1 px-6 pb-10 flex flex-col">
       <div className="flex-1 flex flex-col justify-center">
         <EnvelopeMark className="w-14 h-14 mb-6" />
-        <h1 className="text-white font-bold text-[32px] leading-[1.1] tracking-tight">{t("title")}</h1>
-        <p className="text-white text-[18px] mt-3 leading-snug font-medium">{t("onboarding.headline")}</p>
-        <p className="text-white/50 text-[15px] mt-4 leading-relaxed">{t("onboarding.body")}</p>
+        <h1 className="text-white font-bold text-[32px] leading-[1.1] tracking-tight">SubKill</h1>
+        <p className="text-white/70 text-[15px] mt-3 leading-relaxed">
+          SubKill finds forgotten subscriptions in Gmail and helps you cancel them. Gmail access is
+          read-only: SubKill does not send, delete, or change your mail.
+        </p>
+        <p className="text-white text-[18px] mt-4 leading-snug font-medium">{t("onboarding.headline")}</p>
+        <p className="text-white/50 text-[15px] mt-2 leading-relaxed">{t("onboarding.body")}</p>
         <div className="mt-8 space-y-3">
           {[t("onboarding.bullet1"), t("onboarding.bullet2"), t("onboarding.bullet3")].map((line) => (
             <div key={line} className="flex items-center gap-3 text-white/80 text-[13px]">
