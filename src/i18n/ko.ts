@@ -145,6 +145,10 @@ export const ko: Messages = {
     openPlay: "Google Play 열기",
     openApple: "Apple 열기",
     openPaypal: "PayPal 열기",
+    openDomains: "Open Domains",
+    vercel1: "The button opens Vercel → Domains. Account / Teams is the wrong page for a domain.",
+    vercel2: "Find your domain → ⋮ menu → Turn off Auto Renewal.",
+    vercel3: "Come back and tap I canceled.",
     noPage: "페이지가 없습니다. Gmail 영수증에서 해지한 뒤 ‘취소했어요’를 누르세요.",
   },
   letter: {

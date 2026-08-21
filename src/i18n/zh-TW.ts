@@ -145,6 +145,10 @@ export const zhTW: Messages = {
     openPlay: "開啟 Google Play",
     openApple: "開啟 Apple",
     openPaypal: "開啟 PayPal",
+    openDomains: "Open Domains",
+    vercel1: "The button opens Vercel → Domains. Account / Teams is the wrong page for a domain.",
+    vercel2: "Find your domain → ⋮ menu → Turn off Auto Renewal.",
+    vercel3: "Come back and tap I canceled.",
     noPage: "找不到頁面。在 Gmail 收據取消後，點「我已取消」。",
   },
   letter: {

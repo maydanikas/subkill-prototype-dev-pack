@@ -145,6 +145,10 @@ export const ja: Messages = {
     openPlay: "Google Playを開く",
     openApple: "Appleを開く",
     openPaypal: "PayPalを開く",
+    openDomains: "Open Domains",
+    vercel1: "The button opens Vercel → Domains. Account / Teams is the wrong page for a domain.",
+    vercel2: "Find your domain → ⋮ menu → Turn off Auto Renewal.",
+    vercel3: "Come back and tap I canceled.",
     noPage: "ページがありません。Gmailの領収書を開き、そこで解約してから「解約した」をタップ。",
   },
   letter: {

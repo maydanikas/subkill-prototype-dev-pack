@@ -145,6 +145,10 @@ export const uk: Messages = {
     openPlay: "Відкрити Google Play",
     openApple: "Відкрити Apple",
     openPaypal: "Відкрити PayPal",
+    openDomains: "Відкрити Domains",
+    vercel1: "Кнопка відкриє Vercel → Domains. Account / Teams — не те для домену.",
+    vercel2: "Знайди домен → меню ⋮ → Turn off Auto Renewal.",
+    vercel3: "Повернись і натисни «Я скасував».",
     noPage: "Сторінку не знайшли. Відкрий чек у Gmail, скасуй там, потім натисни «Я скасував».",
   },
   letter: {

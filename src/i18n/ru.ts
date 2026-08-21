@@ -145,7 +145,11 @@ export const ru: Messages = {
     openPlay: "Открыть Google Play",
     openApple: "Открыть Apple",
     openPaypal: "Открыть PayPal",
+    openDomains: "Открыть Domains",
     noPage: "Страницу не нашли. Открой исходный чек в Gmail, отмени там, потом нажми «Я отменил».",
+    vercel1: "Кнопка откроет Vercel → Domains. Account / Teams — не то для домена.",
+    vercel2: "Найди домен → меню ⋮ → Turn off Auto Renewal.",
+    vercel3: "Вернись и нажми «Я отменил».",
   },
   letter: {
     subject: "Запрос на отмену подписки — {name}",

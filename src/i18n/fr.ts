@@ -145,6 +145,10 @@ export const fr: Messages = {
     openPlay: "Ouvrir Google Play",
     openApple: "Ouvrir Apple",
     openPaypal: "Ouvrir PayPal",
+    openDomains: "Open Domains",
+    vercel1: "The button opens Vercel → Domains. Account / Teams is the wrong page for a domain.",
+    vercel2: "Find your domain → ⋮ menu → Turn off Auto Renewal.",
+    vercel3: "Come back and tap I canceled.",
     noPage: "Pas de page. Ouvre le reçu dans Gmail, résilie là-bas, puis appuie sur J’ai résilié.",
   },
   letter: {

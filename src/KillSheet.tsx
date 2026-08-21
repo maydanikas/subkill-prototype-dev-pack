@@ -24,7 +24,8 @@ function placeLabel(place: CancelPlace, url: string | null): string {
   }
 }
 
-function openLabel(place: CancelPlace, t: (key: string) => string): string {
+function openLabel(place: CancelPlace, slug: string, t: (key: string) => string): string {
+  if (slug === "vercel") return t("kill.openDomains");
   if (place === "google_play") return t("kill.openPlay");
   if (place === "apple") return t("kill.openApple");
   if (place === "paypal") return t("kill.openPaypal");
@@ -46,7 +47,9 @@ function openCancelPage(url: string, event: MouseEvent<HTMLAnchorElement>) {
 export function KillSheet({ sub, queueLeft, onClose, onKilled }: Props) {
   const { t, cycle, silence } = useI18n();
   const steps =
-    sub.cancelPlace === "apple"
+    sub.slug === "vercel"
+      ? [t("kill.vercel1"), t("kill.vercel2"), t("kill.vercel3")]
+      : sub.cancelPlace === "apple"
       ? [t("kill.apple1"), t("kill.apple2"), t("kill.apple3")]
       : sub.cancelPlace === "google_play"
         ? [t("kill.play1"), t("kill.play2"), t("kill.play3")]
@@ -155,7 +158,7 @@ export function KillSheet({ sub, queueLeft, onClose, onKilled }: Props) {
                 onClick={(event) => openCancelPage(sub.cancelUrl!, event)}
                 className="flex-1 h-12 rounded-full bg-white/[0.08] border border-white/[0.08] text-white text-[13px] font-medium flex items-center justify-center gap-2 no-underline"
               >
-                <ExternalLink size={16} /> {openLabel(sub.cancelPlace, t)}
+                <ExternalLink size={16} /> {openLabel(sub.cancelPlace, sub.slug, t)}
               </a>
             )}
             <button

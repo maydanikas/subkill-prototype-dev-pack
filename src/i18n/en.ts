@@ -143,7 +143,11 @@ export const en = {
     openPlay: "Open Google Play",
     openApple: "Open Apple",
     openPaypal: "Open PayPal",
+    openDomains: "Open Domains",
     noPage: "No page to open. Open the original receipt in Gmail, cancel there, then tap I canceled.",
+    vercel1: "The button opens Vercel → Domains. Account / Teams is the wrong page for a domain.",
+    vercel2: "Find your domain → ⋮ menu → Turn off Auto Renewal.",
+    vercel3: "Come back and tap I canceled.",
   },
   letter: {
     subject: "Subscription cancellation request — {name}",
