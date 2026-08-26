@@ -15,6 +15,8 @@ type Props = {
   onKilled: (sub: ScoredSub) => void;
 };
 
+const MAX_UPCOMING_VISIBLE = 2;
+
 function placeLabel(place: CancelPlace, url: string | null): string {
   if (place === "google_play") return "Google Play";
   if (place === "apple") return "Apple";
@@ -58,6 +60,8 @@ export function KillSheet({
 }: Props) {
   const { t, cycle, silence } = useI18n();
   const isBatch = batchTotal > 1;
+  const visibleUpcoming = upcomingSubs.slice(0, MAX_UPCOMING_VISIBLE);
+  const hiddenUpcoming = Math.max(0, upcomingSubs.length - MAX_UPCOMING_VISIBLE);
   const steps =
     sub.slug === "vercel"
       ? [t("kill.vercel1"), t("kill.vercel2"), t("kill.vercel3")]
@@ -78,13 +82,13 @@ export function KillSheet({
   return (
     <div className="absolute inset-0 z-50 flex flex-col justify-end">
       <div className="absolute inset-0 bg-black/70" onClick={onClose} />
-      <div className="relative bg-[#1E1E1E] rounded-t-[28px] border-t border-white/[0.08] max-h-[85vh] flex flex-col">
-        <div className="pt-3 pb-2 flex justify-center">
+      <div className="relative bg-[#1E1E1E] rounded-t-[28px] border-t border-white/[0.08] max-h-[90vh] w-full flex flex-col min-h-0">
+        <div className="shrink-0 pt-3 pb-2 flex justify-center">
           <div className="w-10 h-1 rounded-full bg-white/20" />
         </div>
 
         {isBatch && (
-          <div className="px-6 pb-3 space-y-3">
+          <div className="shrink-0 px-6 pb-3 space-y-3">
             <div className="flex items-center justify-between">
               <div className="text-white/50 text-[11px] font-mono tracking-widest uppercase">
                 {t("kill.queueTitle")}
@@ -100,12 +104,17 @@ export function KillSheet({
               />
             </div>
             <div className="rounded-[14px] bg-[#121212] border border-white/[0.06] p-3 space-y-1.5">
-              {completedSubs.map((item) => (
-                <div key={item.id} className="flex items-center gap-2.5 text-[12px] text-white/35">
+              {completedSubs.length > 1 ? (
+                <div className="flex items-center gap-2.5 text-[12px] text-white/35">
                   <Check size={14} className="text-[#00FF88] shrink-0" />
-                  <span className="line-through truncate">{item.name}</span>
+                  <span>{t("kill.queueDoneCount", { n: completedSubs.length })}</span>
                 </div>
-              ))}
+              ) : completedSubs.length === 1 ? (
+                <div className="flex items-center gap-2.5 text-[12px] text-white/35">
+                  <Check size={14} className="text-[#00FF88] shrink-0" />
+                  <span className="line-through truncate">{completedSubs[0].name}</span>
+                </div>
+              ) : null}
               <div className="flex items-center gap-2.5 text-[13px] text-white font-semibold">
                 <div className="w-5 h-5 rounded-full bg-[#00FF88] text-black text-[10px] font-bold flex items-center justify-center shrink-0">
                   {batchIndex}
@@ -115,7 +124,7 @@ export function KillSheet({
                   {t("kill.queueNow")}
                 </span>
               </div>
-              {upcomingSubs.map((item, i) => (
+              {visibleUpcoming.map((item, i) => (
                 <div key={item.id} className="flex items-center gap-2.5 text-[12px] text-white/30 pl-[30px]">
                   <span className="truncate">{item.name}</span>
                   {i === 0 ? (
@@ -125,46 +134,54 @@ export function KillSheet({
                   ) : null}
                 </div>
               ))}
+              {hiddenUpcoming > 0 ? (
+                <div className="text-[11px] text-white/25 pl-[30px] font-mono">
+                  {t("kill.queueMore", { n: hiddenUpcoming })}
+                </div>
+              ) : null}
             </div>
           </div>
         )}
 
-        <div className="px-6 pb-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div
-              className="w-10 h-10 rounded-[12px] flex items-center justify-center text-white font-bold"
-              style={{ background: sub.color }}
+        <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-6 pb-4 scrollbar-hide">
+          <div className="pb-4 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div
+                className="w-10 h-10 rounded-[12px] flex items-center justify-center text-white font-bold"
+                style={{ background: sub.color }}
+              >
+                {sub.letter}
+              </div>
+              <div>
+                <div className="text-white font-semibold text-[15px]">{sub.name}</div>
+                <div className="text-white/40 text-[12px] font-mono">{where}</div>
+              </div>
+            </div>
+            <button
+              onClick={onClose}
+              className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white/70"
             >
-              {sub.letter}
-            </div>
-            <div>
-              <div className="text-white font-semibold text-[15px]">{sub.name}</div>
-              <div className="text-white/40 text-[12px] font-mono">{where}</div>
+              <X size={18} />
+            </button>
+          </div>
+
+          <div className="pb-3">
+            <div className="rounded-[16px] bg-[#FF3B30]/10 border border-[#FF3B30]/20 p-3 flex gap-2.5">
+              <div className="w-6 h-6 rounded-full bg-[#FF3B30]/20 flex items-center justify-center shrink-0 mt-0.5">
+                <AlertTriangle size={12} className="text-[#FF3B30]" />
+              </div>
+              <div className="text-[12px] leading-[1.4] text-[#FF3B30]/90">
+                <span className="font-bold">Waste Score {sub.wasteScore}.</span>{" "}
+                {silence(sub.daysInactive, sub.billingCycle, sub.lastPaidAt !== null)}.
+                {wasteDays > 0
+                  ? t("kill.wasted", { currency: sub.currency, amount: wasted.toFixed(2) })
+                  : ""}
+                {sub.wasteReason === "trial_trap" ? t("kill.trialTrap") : ""}
+                {sub.isDuplicate ? t("kill.duplicate") : ""}
+              </div>
             </div>
           </div>
-          <button onClick={onClose} className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white/70">
-            <X size={18} />
-          </button>
-        </div>
 
-        <div className="px-6 pb-3">
-          <div className="rounded-[16px] bg-[#FF3B30]/10 border border-[#FF3B30]/20 p-3 flex gap-2.5">
-            <div className="w-6 h-6 rounded-full bg-[#FF3B30]/20 flex items-center justify-center shrink-0 mt-0.5">
-              <AlertTriangle size={12} className="text-[#FF3B30]" />
-            </div>
-            <div className="text-[12px] leading-[1.4] text-[#FF3B30]/90">
-              <span className="font-bold">Waste Score {sub.wasteScore}.</span>{" "}
-              {silence(sub.daysInactive, sub.billingCycle, sub.lastPaidAt !== null)}.
-              {wasteDays > 0
-                ? t("kill.wasted", { currency: sub.currency, amount: wasted.toFixed(2) })
-                : ""}
-              {sub.wasteReason === "trial_trap" ? t("kill.trialTrap") : ""}
-              {sub.isDuplicate ? t("kill.duplicate") : ""}
-            </div>
-          </div>
-        </div>
-
-        <div className="flex-1 overflow-y-auto px-6 pb-6 scrollbar-hide">
           <div className="rounded-[20px] bg-[#121212] border border-white/[0.06] p-4 space-y-3">
             <div className="flex items-center gap-2 text-white text-[13px] font-semibold">
               <List size={14} /> {t("kill.twoSteps")}
@@ -183,7 +200,7 @@ export function KillSheet({
               )}
           </div>
 
-          <div className="mt-4 grid grid-cols-2 gap-2">
+          <div className="mt-4 grid grid-cols-2 gap-2 pb-2">
             <div className="rounded-[14px] bg-[#121212] border border-white/[0.06] p-3">
               <div className="text-white/40 text-[10px] tracking-widest">{t("kill.nextBill")}</div>
               <div className="text-white font-semibold font-mono mt-1">
@@ -204,7 +221,7 @@ export function KillSheet({
           </div>
         </div>
 
-        <div className="p-5 pt-3 border-t border-white/[0.06]">
+        <div className="shrink-0 p-5 pt-3 border-t border-white/[0.06] bg-[#1E1E1E]">
           <div className="flex gap-2">
             {sub.cancelUrl && (
               <a

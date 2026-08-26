@@ -115,6 +115,8 @@ export const en = {
     queueProgress: "{current} of {total}",
     queueNow: "now",
     queueNext: "next",
+    queueMore: "+{n} more",
+    queueDoneCount: "{n} done",
     wasted: " That's already {currency}{amount} wasted.",
     trialTrap: " The trial ended and charges started.",
     duplicate: " You're paying twice for overlapping AI tools.",

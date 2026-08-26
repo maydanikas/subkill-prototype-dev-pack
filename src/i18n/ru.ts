@@ -117,6 +117,8 @@ export const ru: Messages = {
     queueProgress: "{current} из {total}",
     queueNow: "сейчас",
     queueNext: "дальше",
+    queueMore: "ещё {n}",
+    queueDoneCount: "{n} готово",
     wasted: " Это уже {currency}{amount} впустую.",
     trialTrap: " Триал кончился, списания пошли.",
     duplicate: " Платишь дважды за пересекающийся AI-инструмент.",

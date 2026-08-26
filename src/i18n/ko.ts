@@ -117,6 +117,8 @@ export const ko: Messages = {
     queueProgress: "{current} / {total}",
     queueNow: "지금",
     queueNext: "다음",
+    queueMore: "+{n}개 더",
+    queueDoneCount: "{n}개 완료",
     wasted: " 이미 {currency}{amount}가 낭비됐습니다.",
     trialTrap: " 체험이 끝나고 결제가 시작됐습니다.",
     duplicate: " 겹치는 AI 도구에 두 번 내고 있습니다.",

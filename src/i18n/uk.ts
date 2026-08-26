@@ -117,6 +117,8 @@ export const uk: Messages = {
     queueProgress: "{current} з {total}",
     queueNow: "зараз",
     queueNext: "далі",
+    queueMore: "ще {n}",
+    queueDoneCount: "{n} готово",
     wasted: " Це вже {currency}{amount} марно.",
     trialTrap: " Тріал скінчився, списання пішли.",
     duplicate: " Платиш двічі за схожий AI-інструмент.",

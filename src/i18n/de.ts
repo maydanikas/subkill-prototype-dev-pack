@@ -117,6 +117,8 @@ export const de: Messages = {
     queueProgress: "{current} von {total}",
     queueNow: "jetzt",
     queueNext: "als Nächstes",
+    queueMore: "+{n} weitere",
+    queueDoneCount: "{n} erledigt",
     wasted: " Das sind schon {currency}{amount} verschwendet.",
     trialTrap: " Der Trial ist vorbei, es wird abgebucht.",
     duplicate: " Du zahlst doppelt für überlappende KI-Tools.",

@@ -117,6 +117,8 @@ export const ja: Messages = {
     queueProgress: "{current} / {total}",
     queueNow: "いま",
     queueNext: "次",
+    queueMore: "あと{n}件",
+    queueDoneCount: "{n}件完了",
     wasted: " すでに {currency}{amount} が無駄です。",
     trialTrap: " トライアルが終わり、課金が始まりました。",
     duplicate: " 重なるAIツールに二重払いしています。",

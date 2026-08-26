@@ -117,6 +117,8 @@ export const zhTW: Messages = {
     queueProgress: "{current} / {total}",
     queueNow: "目前",
     queueNext: "下一個",
+    queueMore: "還有 {n} 個",
+    queueDoneCount: "已完成 {n} 個",
     wasted: " 已經浪費 {currency}{amount}。",
     trialTrap: " 試用結束，開始扣款。",
     duplicate: " 重疊的 AI 工具你在付兩份錢。",

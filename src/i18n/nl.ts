@@ -117,6 +117,8 @@ export const nl: Messages = {
     queueProgress: "{current} van {total}",
     queueNow: "nu",
     queueNext: "volgende",
+    queueMore: "+{n} meer",
+    queueDoneCount: "{n} klaar",
     wasted: " Dat is al {currency}{amount} verspild.",
     trialTrap: " De trial is afgelopen en er wordt afgeschreven.",
     duplicate: " Je betaalt dubbel voor overlappende AI-tools.",

@@ -117,6 +117,8 @@ export const zh: Messages = {
     queueProgress: "{current} / {total}",
     queueNow: "当前",
     queueNext: "下一个",
+    queueMore: "还有 {n} 个",
+    queueDoneCount: "已完成 {n} 个",
     wasted: " 已经浪费 {currency}{amount}。",
     trialTrap: " 试用结束，开始扣款。",
     duplicate: " 重叠的 AI 工具你在付两份钱。",

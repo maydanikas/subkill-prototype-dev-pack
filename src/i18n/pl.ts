@@ -117,6 +117,8 @@ export const pl: Messages = {
     queueProgress: "{current} z {total}",
     queueNow: "teraz",
     queueNext: "następna",
+    queueMore: "+{n} więcej",
+    queueDoneCount: "{n} gotowe",
     wasted: " To już {currency}{amount} w błoto.",
     trialTrap: " Trial się skończył i poszły obciążenia.",
     duplicate: " Płacisz dwa razy za nachodzące na siebie narzędzia AI.",

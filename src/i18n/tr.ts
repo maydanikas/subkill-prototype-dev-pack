@@ -117,6 +117,8 @@ export const tr: Messages = {
     queueProgress: "{current} / {total}",
     queueNow: "şimdi",
     queueNext: "sıradaki",
+    queueMore: "+{n} daha",
+    queueDoneCount: "{n} bitti",
     wasted: " Bu zaten {currency}{amount} boşa gitti.",
     trialTrap: " Deneme bitti, tahsilat başladı.",
     duplicate: " Çakışan YZ araçları için iki kez ödüyorsun.",

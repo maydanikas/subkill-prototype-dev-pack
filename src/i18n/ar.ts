@@ -117,6 +117,8 @@ export const ar: Messages = {
     queueProgress: "{current} من {total}",
     queueNow: "الآن",
     queueNext: "التالي",
+    queueMore: "+{n} أخرى",
+    queueDoneCount: "{n} تمت",
     wasted: " هذا {currency}{amount} مهدور مسبقاً.",
     trialTrap: " انتهت التجربة وبدأت الرسوم.",
     duplicate: " تدفع مرتين لأدوات ذكاء اصطناعي متداخلة.",
