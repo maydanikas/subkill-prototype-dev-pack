@@ -10,6 +10,8 @@ import {
   Zap,
 } from "lucide-react";
 import { KillSheet } from "./KillSheet";
+import { Paywall } from "./Paywall";
+import { DemoGate, type DemoGateKind } from "./DemoGate";
 import {
   beginGmailRedirect,
   clearPendingToken,
@@ -163,6 +165,7 @@ export default function App() {
   const [batchTotal, setBatchTotal] = useState(0);
   const [batchCompleted, setBatchCompleted] = useState<string[]>([]);
   const [paywall, setPaywall] = useState(false);
+  const [demoGate, setDemoGate] = useState<DemoGateKind | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [seeded, setSeeded] = useState(false);
 
@@ -323,6 +326,21 @@ export default function App() {
     setBatchCompleted([]);
   };
 
+  const showDemoLimit = () => {
+    closeQueue();
+    setPaywall(false);
+    setDemoGate("limit");
+  };
+
+  const goOnboarding = () => {
+    setDemoGate(null);
+    setPaywall(false);
+    closeQueue();
+    setPlan("free");
+    setAuthError(null);
+    setScreen("onboarding");
+  };
+
   const toggle = (id: string) => {
     setSelectedIds((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
   };
@@ -331,7 +349,8 @@ export default function App() {
     const unique = ids.filter((id) => live.some((s) => s.id === id));
     if (!unique.length) return;
     if (killsLeft <= 0) {
-      setPaywall(true);
+      if (scanMode === "demo") showDemoLimit();
+      else setPaywall(true);
       return;
     }
     setBatchTotal(unique.length);
@@ -341,18 +360,26 @@ export default function App() {
 
   const onKilled = (sub: ScoredSub) => {
     if (killsLeft <= 0) {
-      setPaywall(true);
+      if (scanMode === "demo") showDemoLimit();
+      else setPaywall(true);
       return;
     }
+    const nextUsed = killsUsed + 1;
     setKilledIds((prev) => [...prev, sub.id]);
     setSelectedIds((prev) => prev.filter((id) => id !== sub.id));
-    setKillsUsed((n) => n + 1);
+    setKillsUsed(nextUsed);
     setSavedYearly((n) => n + sub.yearly);
     setToast(t("toast.killed", { name: sub.name, amount: sub.yearly.toFixed(0) }));
     window.setTimeout(() => setToast(null), 2200);
     setBatchCompleted((prev) => [...prev, sub.id]);
     setQueue((q) => {
       const next = q.slice(1);
+      if (scanMode === "demo" && nextUsed >= FREE_LIMIT) {
+        setBatchTotal(0);
+        setBatchCompleted([]);
+        setDemoGate("limit");
+        return [];
+      }
       if (!next.length) {
         setBatchTotal(0);
         setBatchCompleted([]);
@@ -381,6 +408,10 @@ export default function App() {
     setAuthError(null);
     setScanMode("demo");
     setLiveScan(false);
+    setPlan("free");
+    setDemoGate(null);
+    setPaywall(false);
+    closeQueue();
     resetSession(DEMO_MAILBOX, USER_EMAIL, { name: DEMO_USER_NAME });
     setScreen("scan");
   };
@@ -435,18 +466,33 @@ export default function App() {
                   </div>
                 </div>
               </div>
-              <a
-                href={`mailto:${accountEmail}`}
-                className="w-9 h-9 rounded-full overflow-hidden shrink-0 bg-[#3A3A3C] ring-1 ring-white/10"
-                title={accountEmail}
-              >
-                <AccountAvatar
-                  name={accountName}
-                  email={accountEmail}
-                  picture={accountPicture}
-                  placeholder={scanMode === "demo"}
-                />
-              </a>
+              {scanMode === "demo" ? (
+                <button
+                  type="button"
+                  onClick={() => setDemoGate("account")}
+                  className="w-9 h-9 rounded-full overflow-hidden shrink-0 bg-[#3A3A3C] ring-1 ring-white/10"
+                  title={accountEmail}
+                >
+                  <AccountAvatar
+                    name={accountName}
+                    email={accountEmail}
+                    picture={accountPicture}
+                    placeholder
+                  />
+                </button>
+              ) : (
+                <a
+                  href={`mailto:${accountEmail}`}
+                  className="w-9 h-9 rounded-full overflow-hidden shrink-0 bg-[#3A3A3C] ring-1 ring-white/10"
+                  title={accountEmail}
+                >
+                  <AccountAvatar
+                    name={accountName}
+                    email={accountEmail}
+                    picture={accountPicture}
+                  />
+                </a>
+              )}
             </div>
 
             <div className="flex-1 overflow-y-auto scrollbar-hide pb-[140px]">
@@ -509,7 +555,15 @@ export default function App() {
                     <div className="text-white/40 text-[11px]">
                       {liveScan
                         ? scanStats ?? `${accountEmail} · ${t("home.liveScan")}`
-                        : t("home.demoBox")}
+                        : (
+                          <button
+                            type="button"
+                            onClick={() => setDemoGate("account")}
+                            className="text-left hover:text-white/70"
+                          >
+                            {t("home.demoBox")}
+                          </button>
+                        )}
                     </div>
                   </div>
                 </div>
@@ -517,7 +571,7 @@ export default function App() {
                   onClick={hasGoogleClient() ? startGoogle : startDemo}
                   className="px-3 py-1.5 rounded-full bg-white text-black text-[11px] font-bold"
                 >
-                  {t("home.scan")}
+                  {scanMode === "demo" && hasGoogleClient() ? t("home.myMail") : t("home.scan")}
                 </button>
               </div>
 
@@ -719,13 +773,23 @@ export default function App() {
           />
         )}
 
-        {paywall && (
+        {paywall && scanMode !== "demo" && (
           <Paywall
             onClose={() => setPaywall(false)}
             onBuy={() => {
               setPlan("pro");
               setPaywall(false);
             }}
+          />
+        )}
+
+        {demoGate && scanMode === "demo" && (
+          <DemoGate
+            kind={demoGate}
+            hasGoogle={hasGoogleClient()}
+            onConnect={startGoogle}
+            onStart={goOnboarding}
+            onStay={() => setDemoGate(null)}
           />
         )}
 
@@ -865,21 +929,3 @@ function ScanView({
   );
 }
 
-function Paywall({ onClose, onBuy }: { onClose: () => void; onBuy: () => void }) {
-  const { t } = useI18n();
-  return (
-    <div className="absolute inset-0 z-50 flex flex-col justify-end">
-      <div className="absolute inset-0 bg-black/70" onClick={onClose} />
-      <div className="relative bg-[#1E1E1E] rounded-t-[28px] border-t border-white/[0.08] p-6">
-        <div className="text-white font-bold text-[22px]">{t("paywall.title")}</div>
-        <p className="text-white/50 text-[14px] mt-2 leading-relaxed">{t("paywall.body")}</p>
-        <button onClick={onBuy} className="mt-6 w-full h-12 rounded-[14px] bg-[#00FF88] text-black font-bold">
-          {t("paywall.buy")}
-        </button>
-        <button onClick={onClose} className="mt-2 w-full h-10 text-white/40 text-[13px]">
-          {t("paywall.later")}
-        </button>
-      </div>
-    </div>
-  );
-}

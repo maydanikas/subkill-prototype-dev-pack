@@ -1,6 +1,7 @@
 /** Canonical domain types. Flutter / Cloud Functions should mirror this file. */
 
 export type Plan = "free" | "pro";
+export type ProSku = "monthly" | "yearly";
 export type Provider = "gmail" | "outlook";
 export type BillingCycle = "monthly" | "yearly" | "weekly";
 export type SubscriptionStatus = "active" | "canceled" | "trial";
