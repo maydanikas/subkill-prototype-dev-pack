@@ -160,6 +160,8 @@ export default function App() {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [filter, setFilter] = useState<Filter>("all");
   const [queue, setQueue] = useState<string[]>([]);
+  const [batchTotal, setBatchTotal] = useState(0);
+  const [batchCompleted, setBatchCompleted] = useState<string[]>([]);
   const [paywall, setPaywall] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [seeded, setSeeded] = useState(false);
@@ -298,7 +300,28 @@ export default function App() {
   }, [mix]);
 
   const current = live.find((s) => s.id === queue[0]) ?? null;
+  const completedInBatch = useMemo(
+    () =>
+      batchCompleted
+        .map((id) => scored.find((s) => s.id === id))
+        .filter((s): s is ScoredSub => s != null),
+    [batchCompleted, scored],
+  );
+  const upcomingInBatch = useMemo(
+    () =>
+      queue
+        .slice(1)
+        .map((id) => live.find((s) => s.id === id))
+        .filter((s): s is ScoredSub => s != null),
+    [queue, live],
+  );
   const killsLeft = plan === "pro" ? 99 : Math.max(0, FREE_LIMIT - killsUsed);
+
+  const closeQueue = () => {
+    setQueue([]);
+    setBatchTotal(0);
+    setBatchCompleted([]);
+  };
 
   const toggle = (id: string) => {
     setSelectedIds((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
@@ -311,6 +334,8 @@ export default function App() {
       setPaywall(true);
       return;
     }
+    setBatchTotal(unique.length);
+    setBatchCompleted([]);
     setQueue(unique);
   };
 
@@ -325,7 +350,15 @@ export default function App() {
     setSavedYearly((n) => n + sub.yearly);
     setToast(t("toast.killed", { name: sub.name, amount: sub.yearly.toFixed(0) }));
     window.setTimeout(() => setToast(null), 2200);
-    setQueue((q) => q.slice(1));
+    setBatchCompleted((prev) => [...prev, sub.id]);
+    setQueue((q) => {
+      const next = q.slice(1);
+      if (!next.length) {
+        setBatchTotal(0);
+        setBatchCompleted([]);
+      }
+      return next;
+    });
   };
 
   const resetSession = (
@@ -677,8 +710,11 @@ export default function App() {
         {current && (
           <KillSheet
             sub={current}
-            queueLeft={queue.length}
-            onClose={() => setQueue([])}
+            batchTotal={batchTotal}
+            batchIndex={batchCompleted.length + 1}
+            completedSubs={completedInBatch}
+            upcomingSubs={upcomingInBatch}
+            onClose={closeQueue}
             onKilled={onKilled}
           />
         )}
