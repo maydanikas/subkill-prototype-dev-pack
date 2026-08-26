@@ -1,10 +1,14 @@
 [
   {
-    "relation": ["delegate_permission/common.handle_all_urls"],
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.use_as_origin"
+    ],
     "target": {
       "namespace": "android_app",
       "package_name": "app.subkill.android",
       "sha256_cert_fingerprints": [
+        "61:0C:1B:4C:CF:CC:5F:36:CE:DB:B7:04:00:F4:C2:71:AD:D4:37:76:88:68:0B:D1:79:20:60:B5:E2:F4:69:AC",
         "25:56:10:69:E8:AE:F4:DE:B9:3D:DB:54:7E:4A:05:13:0D:18:D3:6C:59:DC:1C:45:C6:5E:F9:81:1A:7B:14:8B",
         "A3:AD:38:AB:8E:8C:E0:3D:60:2F:DD:C9:71:EF:95:2B:8C:8A:BE:3C:27:E6:15:9B:F1:83:1A:8D:C0:3A:3A:87"
       ]

@@ -6,11 +6,20 @@
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
+  "display_override": ["standalone"],
   "orientation": "portrait-primary",
   "background_color": "#0A0A0A",
   "theme_color": "#0A0A0A",
   "lang": "en",
   "categories": ["productivity", "finance"],
+  "prefer_related_applications": false,
+  "related_applications": [
+    {
+      "platform": "play",
+      "id": "app.subkill.android",
+      "url": "https://play.google.com/store/apps/details?id=app.subkill.android"
+    }
+  ],
   "icons": [
     {
       "src": "/app-icon-192.png",

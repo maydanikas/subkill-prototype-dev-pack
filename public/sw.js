@@ -1,4 +1,4 @@
-const CACHE = "subkill-v2";
+const CACHE = "subkill-v3";
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -32,6 +32,9 @@ self.addEventListener("fetch", (event) => {
 
   const url = new URL(event.request.url);
   if (url.origin !== self.location.origin) return;
+  // Chrome / Play Services fetch this themselves. Never intercept or
+  // fall back to cached HTML — that breaks Trusted Web Activity.
+  if (url.pathname.startsWith("/.well-known/")) return;
 
   event.respondWith(
     fetch(event.request)
@@ -42,6 +45,12 @@ self.addEventListener("fetch", (event) => {
         }
         return response;
       })
-      .catch(() => caches.match(event.request).then((cached) => cached || caches.match("/"))),
+      .catch(() =>
+        caches.match(event.request).then((cached) => {
+          if (cached) return cached;
+          if (event.request.mode === "navigate") return caches.match("/");
+          return undefined;
+        }),
+      ),
   );
 });
